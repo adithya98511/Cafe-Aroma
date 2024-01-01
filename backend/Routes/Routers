@@ -1,0 +1,6 @@
+const router = require("express").Router();
+const contact_controller = require("../Controller/ContactController");
+//api - later used in fronted
+router.post("/contact", contact_controller.contact);
+
+module.exports = router;
