@@ -1,14 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import CoffeeLeft from "../assets/ContactUs.jpg";
 import "../styles/Contact.css";
-import BASE_URL from "../apiConfig.js/apiConfig";
+
 
  function Contact() {
-
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,29 +14,26 @@ import BASE_URL from "../apiConfig.js/apiConfig";
   const [comment, setComment] = useState("");
 
   const handleAddFormSubmit = () => {
-    if (email == "" || name == "" || contactNo == "" || comment == "") {
-      return window.alert("Invalid Input", "Please fill all the fields");
-    }else{
-      window.alert("Your message has been submitted");
+    if (email === "" || name === "" || contactNo === "" || comment === "") {
+      return window.alert("Please fill all the fields");
     }
 
     //request body
     const insertData = {
       name: name,
-      email: email,
+      email:email,
       contactNo: contactNo,
       comment: comment,
     };
+    console.log(insertData);
 
-    const insertUrl = '/contact';
+    const insertUrl = 'http://localhost:5000/contact';
 
     axios
       //sends the post request
       .post(insertUrl, insertData)
       .then((response) => {
         if (response.data.success) {
-          // showToast();
-          // Alert.alert("Success", response.data.message);
           setName("");
           setEmail("");
           setContactNo("");
@@ -48,7 +43,7 @@ import BASE_URL from "../apiConfig.js/apiConfig";
         }
       })
       .catch((error) => {
-        console.error("Error sending Otp:", error);
+        console.error(error.message);
         window.alert("Error", "An error occurred while sending Message");
       });
  }
@@ -63,15 +58,16 @@ import BASE_URL from "../apiConfig.js/apiConfig";
       <div className="rightSide">
         <h1> Contact Us</h1>
 
-        <form id="contact-form" method="POST">
+        <form id="contact-form">
           <label htmlFor="name">Full Name</label>
-          <input name="name" placeholder="Enter full name..." type="text" />
+          <input name="name" placeholder="Enter full name..." type="text"  onChange={(e) => { setName(e.target.value) }}/>
           
-          <label htmlFor="name">Number</label>
-          <input name="name" placeholder="Enter mobile...." type="number" />
+          <label htmlFor="contact">Number</label>
+          <input name="name" placeholder="Enter mobile...." type="number"   onChange={(e) => { setContactNo(e.target.value) }}/>
 
           <label htmlFor="email">Email</label>
-          <input name="email" placeholder="Enter email..." type="email" />
+          <input name="email" placeholder="Enter email..." type="email"  onChange={(e) => { setEmail(e.target.value) }} />
+
           <label htmlFor="mesage">Message</label>
           <textarea
             rows="6"
@@ -79,9 +75,10 @@ import BASE_URL from "../apiConfig.js/apiConfig";
             name="message"
             className="no-border"
             required
+            onChange={(e) => { setComment(e.target.value) }}
           ></textarea>
           <hr border="1" />
-          <button type="submit" onClick={handleAddFormSubmit()}> Send Message</button>
+          <button type="submit" onClick={handleAddFormSubmit}> Send Message</button>
         </form>
 
       </div>
