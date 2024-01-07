@@ -1,11 +1,15 @@
 const login_service = require("../Services/LoginService");
 
-exports.__login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    const successRes = await login_service.login_Func(email, password);
-    res.json({ status: true, success: "Message Sent!" });
+    if (login_service.matchCred(email, password)) {
+      res.status(200).json({ status: true, success: "Login Success" });
+    } else {
+      res
+        .status(400)
+        .json({ status: false, success: "Login Fail! Password Mismatch" });
+    }
   } catch (error) {
     console.log(error.message);
     throw error;

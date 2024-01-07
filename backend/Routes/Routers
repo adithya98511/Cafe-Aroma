@@ -1,8 +1,11 @@
 const router = require("express").Router();
 const contact_controller = require("../Controller/ContactController");
 const login_controller = require("../Controller/LoginController");
+const reg_controller = require("../Controller/RegisterController");
+
 //api - later used in fronted
 router.post("/contact", contact_controller.contact);
-router.post("/login", login_controller.__login);
+router.post("/login", login_controller.login);
+router.post("/reg", reg_controller.reg);
 
 module.exports = router;

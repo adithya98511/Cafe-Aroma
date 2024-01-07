@@ -7,6 +7,8 @@ const { Schema } = mongoose;
 // creating the schema for the database
 
 const loginScheme = new Schema({
+  userId: {},
+
   email: {
     type: String,
     lowercase: true,

@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
 import Price from "./pages/Price";
 import Login from "./pages/Login";
+import Registration from "./pages/Registration";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="menu/price" element={<Price />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Registration />} />
         </Routes>
         <Footer />
       </Router>

@@ -1,32 +1,43 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import Registration from "./Registration";
-import "../styles/Login.css";
+import axios from "axios";
+import "../styles/Registration.css";
 
 //images
-import LoginLeft from "../assets/login.jpg";
+import RegisterLeft from "../assets/registration.jpg";
 
-function Login() {
+function Registration() {
   // const history = useNavigate();
 
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmed, setConfirmed] = useState("");
 
-  const loginHnadle = () => {
-    if (email === "" || password === "") {
+  const registerHnadle = () => {
+    if (
+      username === "" ||
+      email === "" ||
+      password === "" ||
+      confirmed === "" ||
+      country === ""
+    ) {
       return window.alert("Please fill all the fields");
     }
 
     //request body
     const insertData = {
       email: email,
+      username: username,
+      country: country,
       password: password,
+      confirmed: confirmed,
     };
 
     //console.log(insertData);
 
-    const insertUrl = "http://localhost:5000/login";
+    const insertUrl = "http://localhost:5000/reg";
 
     axios
       //sends the post request
@@ -46,15 +57,22 @@ function Login() {
   };
 
   return (
-    <div className="login">
+    <div className="register">
       <div
         className="leftSide"
-        style={{ backgroundImage: `url(${LoginLeft})` }}
+        style={{ backgroundImage: `url(${RegisterLeft})` }}
       ></div>
       <div className="rightSide">
-        <h1>Login</h1>
+        <h1>Register</h1>
 
         <form>
+          <input
+            type="text"
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            placeholder="Username"
+          />
           <input
             type="email"
             onChange={(e) => {
@@ -63,23 +81,40 @@ function Login() {
             placeholder="Email"
           />
           <input
+            type="country"
+            onChange={(e) => {
+              setCountry(e.target.value);
+            }}
+            placeholder="country"
+          />
+
+          <input
             type="password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
             placeholder="Password"
           />
-          <button type="submit" onClick={loginHnadle}>
+
+          <input
+            type="password"
+            onChange={(e) => {
+              setConfirmed(e.target.value);
+            }}
+            placeholder="Confirm Password"
+          />
+          <button type="submit" onClick={registerHnadle}>
             {" "}
-            Login
+            Register
           </button>
         </form>
 
         <br />
+
         <div className="para">
           <p>
-            <span> Or</span>
-            <Link to="/register"> Signup Page</Link>
+            <span> Already have an Account ? </span>
+            <Link to="/login"> Login</Link>
           </p>
         </div>
       </div>
@@ -87,4 +122,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Registration;

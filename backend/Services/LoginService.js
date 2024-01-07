@@ -1,16 +1,17 @@
 const login_model = require("../Models/LoginModel");
 
 class LoginService {
-  static async login_Func(email, password) {
+  static async matchCred(email, password) {
     try {
-      const login__model = new login_model({
-        email,
-        password,
-      });
-      console.log("Saved....");
-      return await login__model.save();
+      const result = await login_model.findOne({ email: email }).password;
+      if (result === password) {
+        return true;
+      } else {
+        console.log("password mismatch!");
+        return false;
+      }
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 }
