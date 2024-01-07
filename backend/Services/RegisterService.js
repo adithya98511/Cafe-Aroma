@@ -12,10 +12,11 @@ class RegService {
         confirmed,
       });
 
-      const login__model = new login_model({
-        email,
-        username,
-      });
+      // const login__model = new login_model({
+      //   userid:reg__model._id,
+      //   email,
+      //   username,
+      // });
 
       return await reg__model.save();
     } catch (error) {

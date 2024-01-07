@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 import Price from "./pages/Price";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
-
+import Account from "./pages/Account";
 function App() {
   return (
     <div className="App">
@@ -23,9 +23,10 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="menu/price" element={<Price />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
         <Footer />
       </Router>

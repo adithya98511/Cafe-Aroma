@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Registration from "./Registration";
 import "../styles/Login.css";
 
@@ -8,41 +8,41 @@ import "../styles/Login.css";
 import LoginLeft from "../assets/login.jpg";
 
 function Login() {
-  // const history = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginHnadle = () => {
+  const loginHandle = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
     if (email === "" || password === "") {
       return window.alert("Please fill all the fields");
     }
 
-    //request body
-    const insertData = {
-      email: email,
-      password: password,
-    };
+    try {
+      //request body
+      const insertData = {
+        email: email,
+        password: password,
+      };
 
-    //console.log(insertData);
+      const insertUrl = "http://localhost:5000/login";
 
-    const insertUrl = "http://localhost:5000/login";
-
-    axios
       //sends the post request
-      .post(insertUrl, insertData)
-      .then((response) => {
-        if (response.data.success) {
-          setEmail("");
-          setPassword("");
-        } else {
-          window.alert("Unsuccessful", response.data.message);
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-        window.alert("Error", "An error occurred while login");
-      });
+      const response = await axios.post(insertUrl, insertData);
+
+      if (response.data.success) {
+        setEmail("");
+        setPassword("");
+        navigate("/account");
+      } else {
+        alert("Unsuccessful");
+      }
+    } catch (error) {
+      console.error(error.message);
+      window.alert("Error: An error occurred while login");
+    }
   };
 
   return (
@@ -69,8 +69,7 @@ function Login() {
             }}
             placeholder="Password"
           />
-          <button type="submit" onClick={loginHnadle}>
-            {" "}
+          <button type="submit" onClick={loginHandle}>
             Login
           </button>
         </form>
