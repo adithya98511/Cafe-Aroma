@@ -29,6 +29,7 @@ class RegService {
   static async isEmailAlreadyExists(email) {
     try {
       const result = await reg_model.findOne({ email: email });
+      console.log(result);
       return result;
     } catch (error) {
       console.error("Error checking email existence:", error);

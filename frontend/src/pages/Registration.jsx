@@ -15,45 +15,61 @@ function Registration() {
   const [password, setPassword] = useState("");
   const [confirmed, setConfirmed] = useState("");
 
-  const registerHnadle = () => {
+  const registerHanadle = async () => {
     if (
       username === "" ||
       email === "" ||
+      country === "" ||
       password === "" ||
-      confirmed === "" ||
-      country === ""
+      confirmed === ""
     ) {
       return window.alert("Please fill all the fields");
-    }
+    } else {
+      try {
+        //request body
+        const insertData = {
+          email: email,
+          username: username,
+          country: country,
+          password: password,
+          confirmed: confirmed,
+        };
 
-    //request body
-    const insertData = {
-      email: email,
-      username: username,
-      country: country,
-      password: password,
-      confirmed: confirmed,
-    };
+        //console.log(insertData);
 
-    //console.log(insertData);
+        const insertUrl = "http://localhost:5000/reg";
 
-    const insertUrl = "http://localhost:5000/reg";
-
-    axios
-      //sends the post request
-      .post(insertUrl, insertData)
-      .then((response) => {
-        if (response.data.success) {
+        const response = await axios.post(insertUrl, insertData);
+        console.log("Response :", response.data);
+        if (response.data.status) {
+          // This block will be executed if status is true
+          setUserName("");
           setEmail("");
+          setCountry("");
           setPassword("");
+          setConfirmed("");
+          window.alert("Success");
+          console.log(response.data);
+          console.log("successfully");
+          // } else if (response.data.status === false) {
+          //   // This block will be executed if status is false
+          //   console.log("Email already registered");
+          //   window.alert("Email already registered");
+          //   console.log(response.data);
+          // }
         } else {
-          window.alert("Unsuccessful", response.data.message);
+          //This block will be executed if status is false
+          console.log("Email already registered");
+          window.alert("Email already registered");
+          console.log(response.data);
         }
-      })
-      .catch((error) => {
-        console.error(error.message);
-        window.alert("Error", "An error occurred while login");
-      });
+      } catch (error) {
+        console.error("Registration error:", error);
+        window.alert(
+          "Error occurred during registration. Check console for details."
+        );
+      }
+    }
   };
 
   return (
@@ -67,13 +83,6 @@ function Registration() {
 
         <form>
           <input
-            type="text"
-            onChange={(e) => {
-              setUserName(e.target.value);
-            }}
-            placeholder="Username"
-          />
-          <input
             type="email"
             onChange={(e) => {
               setEmail(e.target.value);
@@ -81,13 +90,19 @@ function Registration() {
             placeholder="Email"
           />
           <input
-            type="country"
+            type="text"
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            placeholder="username"
+          />
+          <input
+            type="text"
             onChange={(e) => {
               setCountry(e.target.value);
             }}
             placeholder="country"
           />
-
           <input
             type="password"
             onChange={(e) => {
@@ -95,7 +110,6 @@ function Registration() {
             }}
             placeholder="Password"
           />
-
           <input
             type="password"
             onChange={(e) => {
@@ -103,8 +117,7 @@ function Registration() {
             }}
             placeholder="Confirm Password"
           />
-          <button type="submit" onClick={registerHnadle}>
-            {" "}
+          <button type="submit" onClick={registerHanadle}>
             Register
           </button>
         </form>

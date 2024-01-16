@@ -19,7 +19,7 @@ function Menu() {
                 name={menuItem.name}
                 price={menuItem.price}
               />
-              <Link to={`/menu/price/${menuItem.name}`}>
+              <Link to={`/${menuItem.name}`}>
                 <button className="menu-btn">ORDER NOW</button>
               </Link>
             </div>
