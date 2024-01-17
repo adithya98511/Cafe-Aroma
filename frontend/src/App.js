@@ -12,6 +12,7 @@ import Price from "./pages/Price";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Account from "./pages/Account";
+import Order from "./pages/Order";
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/account/:id" element={<Account />} />
+          <Route path="/order/:menuid" element={<Order />} />
         </Routes>
         <Footer />
       </Router>
