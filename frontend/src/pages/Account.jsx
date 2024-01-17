@@ -1,8 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function Account() {
+  const { id } = useParams();
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    loginHandle();
+  }, []);
+
+  const loginHandle = async () => {
+    try {
+      //request body
+      const insertData = {
+        id: id,
+      };
+
+      const insertUrl = "http://localhost:5000/findUserById";
+
+      //sends the post request
+      const response = await axios.post(insertUrl, insertData);
+
+      if (response.data.success) {
+        console.log("Recieved Data from Response", response.data.data);
+        setUser(response.data.data);
+      } else {
+        alert("Unsuccessful");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <div>
+      <h1>{user.username}</h1>
       Account Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim vel
       ipsa dolores veniam exercitationem? Explicabo sunt libero, praesentium
       facere laboriosam maiores sed aperiam illo maxime ad? Corrupti asperiores

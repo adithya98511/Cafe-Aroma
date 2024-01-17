@@ -10,15 +10,24 @@ class LoginService {
       if (result) {
         if (result.password == password) {
           console.log("Password is correct");
-          return true;
+          return result;
         } else {
           console.log("Password Mismatched");
-          return false;
+          return "Password Mismatched";
         }
       } else {
         console.log("no account exist for that email");
-        return false;
+        return "no account exist for that email";
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async findByID(id) {
+    try {
+      const result = await reg_model.findById({ _id: id });
+      return result;
     } catch (error) {
       console.log(error);
     }

@@ -35,7 +35,8 @@ function Login() {
       if (response.data.success) {
         setEmail("");
         setPassword("");
-        navigate("/account");
+        navigate(`/account/${response.data.data._id}`);
+        console.log(response.data.data);
       } else {
         alert("Unsuccessful");
       }

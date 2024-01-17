@@ -6,6 +6,7 @@ const reg_controller = require("../Controller/RegisterController");
 //api - later used in fronted
 router.post("/contact", contact_controller.contact);
 router.post("/login", login_controller.login);
+router.post("/findUserById", login_controller.findUserById);
 router.post("/reg", reg_controller.reg);
 
 module.exports = router;
